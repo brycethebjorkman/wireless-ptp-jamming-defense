@@ -1,0 +1,3 @@
+#!/usr/bin/env -S sh -c "echo >&2 \"Error: You are running this script instead of sourcing it. Make sure to use it as 'source setenv' or '. setenv', otherwise its settings won't take effect.\"; exit 1"
+
+. "$HOME/omnetpp-6.0.2/setenv"

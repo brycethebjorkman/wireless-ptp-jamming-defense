@@ -1,0 +1,6 @@
+*.swp
+*.swo
+*.vim
+inet4.5/
+/.metadata/
+results

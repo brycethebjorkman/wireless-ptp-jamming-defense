@@ -1,0 +1,5 @@
+.settings/
+.nedexclusions
+out/
+src/Makefile
+src/tcs-proj*

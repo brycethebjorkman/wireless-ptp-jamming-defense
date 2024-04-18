@@ -1,0 +1,1013 @@
+file 77027918 1713403126                                        
+version 3
+run IncrementalChannelHopping-0-20240417-20:18:34-104045
+attr configname IncrementalChannelHopping
+attr datetime 20240417-20:18:34
+attr datetimef 20240417-201834
+attr experiment IncrementalChannelHopping
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network wGptpPcapRecorder
+attr processid 104045
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../../../inet4.5/images
+config extends Different_gPTP_Parameters
+config sim-time-limit 1800s
+config *.*.gptp.channelHopType "\"incremental\""
+config extends With_TCP_Client
+config sim-time-limit 3600s
+config extends General
+config description "Add a TcpSessionApp to Host 2"
+config *.host1.numApps 1
+config *.host1.app[*].typename TcpSessionApp
+config *.host1.app[0].active true
+config *.host1.app[0].localPort -1
+config *.host1.app[0].connectAddress "\"host2\""
+config *.host1.app[0].connectPort 1000
+config *.host1.app[0].tOpen 0.2s
+config *.host1.app[0].tSend 0.4s
+config *.host1.app[0].sendBytes 400000B
+config *.host1.app[0].sendScript "\"\""
+config *.host1.app[0].tClose 100s
+config network wGptpPcapRecorder
+config total-stack 7MiB
+config *.radioMedium.analogModel.ignorePartialInterference true
+config *.host1.numWlanInterfaces 1
+config *.host2.numWlanInterfaces 1
+config *.host*.wlan[*].typename Ieee80211Interface
+config *.host*.wlan[*].mgmt.typename Ieee80211MgmtAdhoc
+config *.host*.wlan[*].agent.typename ""
+config *.host1.gptp.masterPorts "[\"wlan0\"]"
+config *.host2.gptp.slavePort "\"wlan0\""
+config **.gptp.*.vector-recording true
+config *.host1.numPcapRecorders 1
+config *.host2.numPcapRecorders 1
+config **.pcapRecorder[*].alwaysFlush true
+config **.crcMode "\"computed\""
+config **.fcsMode "\"computed\""
+config **.host1.clock.typename OscillatorBasedClock
+config **.host1.clock.oscillator.typename RandomDriftOscillator
+config **.oscillator.changeInterval 12.5ms
+config **.oscillator.driftRate "uniform(-100ppm, 100ppm)"
+config **.oscillator.driftRateChange "uniform(-1ppm, 1ppm)"
+config **.oscillator.driftRateChangeUpperLimit 100ppm
+config **.oscillator.driftRateChangeLowerLimit -100ppm
+config **.referenceClock "\"host1.clock\""
+config *.host2.numApps 1
+config *.host2.app[*].typename TcpEchoApp
+config *.host2.app[0].localPort 1000
+config *.host2.app[0].echoFactor 2.0
+config *.host2.app[0].echoDelay 0s
+
+vector 0 wGptpPcapRecorder.host1.wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 1 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 2 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 3 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 4 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 5 wGptpPcapRecorder.host1.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 6 wGptpPcapRecorder.host1.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 7 wGptpPcapRecorder.host1.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 8 wGptpPcapRecorder.host2.wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 9 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 10 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 11 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 12 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 13 wGptpPcapRecorder.host2.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 14 wGptpPcapRecorder.host2.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 15 wGptpPcapRecorder.host2.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 16 wGptpPcapRecorder.host1.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 17 wGptpPcapRecorder.host1.wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 18 wGptpPcapRecorder.host2.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 19 wGptpPcapRecorder.host2.wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 20 wGptpPcapRecorder.host1.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 21 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 22 wGptpPcapRecorder.host2.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 23 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 24 wGptpPcapRecorder.host1.clock timeChanged:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr title "Clock time"
+vector 25 wGptpPcapRecorder.host1.wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 26 wGptpPcapRecorder.host2.clock timeChanged:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr title "Clock time"
+vector 27 wGptpPcapRecorder.host2.wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 28 wGptpPcapRecorder.host2.wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from upper layer, packetBytes"
+vector 29 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 30 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "backoff periods"
+vector 31 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 32 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 33 wGptpPcapRecorder.host2.wlan[0].mac.dcf datarateSelected:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "datarates selected"
+vector 34 wGptpPcapRecorder.host2.wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to lower layer, packetBytes"
+vector 35 wGptpPcapRecorder.host2.wlan[0].radio transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+vector 36 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent, packetBytes"
+vector 37 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, packetBytes"
+vector 38 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, packetBytes"
+vector 39 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+vector 40 wGptpPcapRecorder.host1.wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from lower layer, packetBytes"
+vector 41 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received, packetBytes"
+vector 42 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, packetBytes"
+vector 43 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, packetBytes"
+vector 44 wGptpPcapRecorder.host1.wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to upper layer, packetBytes"
+vector 45 wGptpPcapRecorder.host1.wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from upper layer, packetBytes"
+vector 46 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 47 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "backoff periods"
+vector 48 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 49 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 50 wGptpPcapRecorder.host1.wlan[0].mac.dcf datarateSelected:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "datarates selected"
+vector 51 wGptpPcapRecorder.host1.wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to lower layer, packetBytes"
+vector 52 wGptpPcapRecorder.host1.wlan[0].radio transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+vector 53 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent, packetBytes"
+vector 54 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, packetBytes"
+vector 55 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, packetBytes"
+vector 56 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+vector 57 wGptpPcapRecorder.host2.wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from lower layer, packetBytes"
+vector 58 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received, packetBytes"
+vector 59 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, packetBytes"
+vector 60 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, packetBytes"
+vector 61 wGptpPcapRecorder.host2.wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to upper layer, packetBytes"
+vector 62 wGptpPcapRecorder.host2.gptp peerDelay:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 63 wGptpPcapRecorder.host1.clock.oscillator driftRateChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "Oscillator drift rate"
+attr unit ppm
+vector 64 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 65 wGptpPcapRecorder.host1.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 66 wGptpPcapRecorder.host2.gptp timeDifference:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+vector 67 wGptpPcapRecorder.host2.gptp rateRatio:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 68 wGptpPcapRecorder.host2.gptp localTime:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+vector 69 wGptpPcapRecorder.host1.tcp.conn-2 tcpRcvQueueBytes:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 70 wGptpPcapRecorder.host1.tcp.conn-2 rcvAdv:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 71 wGptpPcapRecorder.host1.tcp.conn-2 rcvWnd:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 72 wGptpPcapRecorder.host1.tcp.conn-2 sndAck:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 73 wGptpPcapRecorder.host1.ipv4.arp arpRequestSent:vector(packetBytes) ETV
+attr recordingmode vector(packetBytes)
+attr source arpRequestSent
+attr title "ARP request sent, packetBytes"
+vector 74 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetSentToPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , packetBytes"
+vector 75 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 76 wGptpPcapRecorder.host2.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 77 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, packetBytes"
+vector 78 wGptpPcapRecorder.host2.ipv4.arp arpReplySent:vector(packetBytes) ETV
+attr recordingmode vector(packetBytes)
+attr source arpReplySent
+attr title "ARP replies sent, packetBytes"
+vector 79 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetSentToPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, packetBytes"
+vector 80 wGptpPcapRecorder.host2.wlan[0].mac.rx nav:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source navChanged
+attr title "network allocation vector"
+vector 81 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetReceivedFromPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, packetBytes"
+vector 82 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetSentToPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, packetBytes"
+vector 83 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetReceivedFromPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, packetBytes"
+vector 84 wGptpPcapRecorder.host1.wlan[0].mac.rx nav:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source navChanged
+attr title "network allocation vector"
+vector 85 wGptpPcapRecorder.host2.tcp.conn-1 rcvSeq:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 86 wGptpPcapRecorder.host2.tcp.conn-1 rcvAck:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 87 wGptpPcapRecorder.host2.tcp.conn-1 tcpRcvPayloadBytes:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 88 wGptpPcapRecorder.host2.tcp.conn-3 rcvAdv:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 89 wGptpPcapRecorder.host2.tcp.conn-3 sndWnd:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 90 wGptpPcapRecorder.host2.tcp.conn-3 tcpRcvQueueBytes:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 91 wGptpPcapRecorder.host2.tcp.conn-3 rcvWnd:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 92 wGptpPcapRecorder.host2.tcp.conn-3 sndAck:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 93 wGptpPcapRecorder.host1.tcp.conn-2 rcvSeq:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 94 wGptpPcapRecorder.host1.tcp.conn-2 rcvAck:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 95 wGptpPcapRecorder.host1.tcp.conn-2 tcpRcvPayloadBytes:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 96 wGptpPcapRecorder.host1.tcp.conn-2 sndWnd:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 97 wGptpPcapRecorder.host1.app[0] packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 98 wGptpPcapRecorder.host1.tcp.conn-2 sndNxt:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 99 wGptpPcapRecorder.host1.tcp.conn-2 unacked:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 100 wGptpPcapRecorder.host2.tcp.conn-3 rcvSeq:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 101 wGptpPcapRecorder.host2.tcp.conn-3 rcvAck:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 102 wGptpPcapRecorder.host2.tcp.conn-3 tcpRcvPayloadBytes:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 103 wGptpPcapRecorder.host2.tcp.conn-3 unacked:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 104 wGptpPcapRecorder.host2.tcp.conn-3 dupAcks:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 105 wGptpPcapRecorder.host2.app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 106 wGptpPcapRecorder.host2.app[0] endToEndDelay:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "end-to-end delay"
+attr unit s
+vector 107 wGptpPcapRecorder.host2.app[0] packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 108 wGptpPcapRecorder.host2.tcp.conn-3 sndNxt:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 109 wGptpPcapRecorder.host1.tcp.conn-2 rtt:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 110 wGptpPcapRecorder.host1.tcp.conn-2 srtt:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 111 wGptpPcapRecorder.host1.tcp.conn-2 rttvar:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 112 wGptpPcapRecorder.host1.tcp.conn-2 rto:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 113 wGptpPcapRecorder.host1.tcp.conn-2 cwnd:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 114 wGptpPcapRecorder.host1.tcp.conn-2 ssthresh:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 115 wGptpPcapRecorder.host1.tcp.conn-2 dupAcks:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 116 wGptpPcapRecorder.host1.app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 117 wGptpPcapRecorder.host1.app[0] endToEndDelay:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "end-to-end delay"
+attr unit s
+vector 118 wGptpPcapRecorder.host2.tcp.conn-3 rtt:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 119 wGptpPcapRecorder.host2.tcp.conn-3 srtt:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 120 wGptpPcapRecorder.host2.tcp.conn-3 rttvar:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 121 wGptpPcapRecorder.host2.tcp.conn-3 rto:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 122 wGptpPcapRecorder.host2.tcp.conn-3 cwnd:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 123 wGptpPcapRecorder.host2.tcp.conn-3 ssthresh:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+vector 124 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetSentToPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, packetBytes"
+vector 125 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetReceivedFromPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, packetBytes"
+vector 126 wGptpPcapRecorder.host1.wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+vector 127 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 128 wGptpPcapRecorder.host1.wlan[0].mac packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 129 wGptpPcapRecorder.host1.wlan[0].mac packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+vector 130 wGptpPcapRecorder.host1.wlan[0].mac.dcf packetSentToPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetSentToPeer)
+attr title "packets sent: with retry, packetBytes"
+vector 131 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetReceivedFromPeerWithRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Retry(packetReceivedFromPeer)
+attr title "packets received: with retry, packetBytes"
+vector 132 wGptpPcapRecorder.host2.wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+vector 133 wGptpPcapRecorder.host2.wlan[0].mac.dcf packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 134 wGptpPcapRecorder.host2.wlan[0].mac packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+vector 135 wGptpPcapRecorder.host2.wlan[0].mac packetDropDuplicateDetected:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsDuplicateDetected(packetDropped)
+attr title "packet drops: duplicate detected, packetBytes"
+21	30341 842716 0 108522 0 3.959638893824 32768 0 2 32220 56450
+23	873057 843422 0 109462 0 3.973304266832 32768 0 2 31586 55384
+121	1716479 3079 1177 122205 2.20641801384 4.16723552216 111 1 2.62731667128 116.95371906385 129.3973560494
+120	1719558 4412 1177 122205 2.20641801384 4.16723552216 111 0.001424948691 0.656713334256 5.768909864402 1.8942127214101
+119	1723970 4403 1177 122205 2.20641801384 4.16723552216 111 0.000463334256 0.027046503972 1.891950369929 0.037243949887024
+123	1728373 53749 1177 158019 2.20641801384 100.002011426684 1494 4294967295 4294967295 6416681138730 2.7559435633289e+22
+122	1782122 47571 1177 158019 2.20641801384 100.002011426684 1494 1072 801320 599386824 3.2030780979782e+14
+102	1829693 61740 966 158019 2.20206067128 100.002011426684 2243 0 536 400000 214343552
+90	1891433 77116 912 157948 2.201062002768 100.00086208966 2990 0 0 0 0
+104	1968549 60222 990 158019 2.202711339792 100.002011426684 2242 0 0 0 0
+103	2028771 89171 966 158019 2.20206067128 100.002011426684 2976 0 7504 21348633 154338079809
+101	2117942 72117 966 158019 2.20206067128 100.002011426684 2243 550266 1350267 1974956623 1.8512994271236e+15
+100	2190059 71295 966 158019 2.20206067128 100.002011426684 2243 50000 450001 718462497 2.6903054530538e+14
+92	2261354 69009 912 157948 2.201062002768 100.00086208966 2243 50000 450001 713397570 2.6644579269536e+14
+108	2330363 48361 993 122150 2.202711339792 4.165980853648 1493 550266 1349978 1418532146 1.4274546067295e+15
+88	2378724 69065 912 157948 2.201062002768 100.00086208966 2244 57504 457505 730286546 2.7728207350183e+14
+91	2447789 64702 912 157948 2.201062002768 100.00086208966 2243 7504 7504 16831472 126303365888
+89	2512491 43344 912 158019 2.201062002768 100.002011426684 1496 7504 7504 11225984 84239783936
+118	2555835 4397 1177 122205 2.20641801384 4.16723552216 111 0.001254668512 0.051437408992 1.960633502784 0.043544283295217
+0	2560232 286733 0 186389 0 176.255099761156 10938 0 1 5468 5468
+1	2846965 287054 0 186411 0 176.379541996531 10848 0 28 58276 936190
+2	3134019 306475 0 186411 0 176.379541996531 10848 0 77344 125377968 6428013158144
+3	3440494 284438 0 186389 0 176.255099761156 10844 0 2 9917 14413
+4	3724932 508516 0 186411 0 176.379541996531 19857 0 1 9928 9928
+5	4233448 8 0 0 0 0 1 0 0 0 0
+6	4233456 8 0 0 0 0 1 0 0 0 0
+7	4233464 8 0 0 0 0 1 0 0 0 0
+8	4233472 123533 0 186249 0 175.997924150569 4938 0 1 2468 2468
+9	4357005 122908 0 186245 0 175.997866150569 4847 0 27 41125 641153
+10	4479913 141874 0 186245 0 175.997866150569 4847 0 76448 125361168 5930997570816
+11	4621787 126028 0 186249 0 175.997924150569 4844 0 2 6593 10765
+12	4747815 353618 0 186244 0 175.997866150569 13646 0 1 6822 6822
+13	5101433 9 0 0 0 0 1 0 0 0 0
+14	5101442 9 0 0 0 0 1 0 0 0 0
+15	5101451 9 0 0 0 0 1 0 0 0 0
+16	5101460 413814 0 186390 0 176.255099761156 15429 0 3 38567 100273
+17	5515274 40023 0 186404 0 176.32953706779 1411 0 11 7743 59293
+18	5555297 244744 0 186250 0 175.997924150569 9435 0 3 23582 61312
+19	5800041 40019 0 186402 0 176.320536096609 1411 0 11 7743 59293
+20	5840060 656353 0 186390 0 176.255099761156 24771 0 3 26402 54434
+21	6496413 832924 108527 186411 3.959868893824 176.379541996531 29664 0 2 16490 31970
+22	7329337 656208 0 186391 0 176.255101095412 24767 0 3 35385 81387
+23	7985545 493774 109471 186391 3.973814266832 176.255101095412 17662 0 2 4414 7904
+24	8479319 467710 0 186408 0 176.375 14063 0 176.37045845075 1236437.5272307 144999641.22778
+25	8947029 1616 0 116521 0 4.082472590688 60 31 1023 14116 8662396
+26	8948645 118594 0 186394 0 176.255101095412 2821 0 176.25067131149 248690.76609715 29231532.848669
+27	9067239 1662 0 116387 0 4.078960582384 61 31 1023 13731 7893117
+28	9068901 66882 4 186243 0 175.997866150569 2421 36 584 918678 511378532
+29	9135783 69303 4 186243 0 175.997866150569 2421 512 4896 7891728 36142244096
+30	9205086 65886 4 186243 0 175.997866150569 2468 0 992 44401 4256753
+31	9270972 90590 6 186245 0.00019 175.997866150569 2421 0 0.034762049824 17.04336254984 0.23794429925284
+32	9361562 69337 6 186245 0.00019 175.997866150569 2421 512 4896 7891728 36142244096
+33	9430899 155368 6 186245 0.00019 175.997866150569 4716 24000000 24000000 113184000000 2.716416e+18
+34	9586267 128584 6 186245 0.00019 175.997866150569 4716 14 612 1031694 572441236
+35	9714851 489435 7 186250 0.00019 175.997924150569 18864 0 2 18864 28296
+36	10204286 128588 10 186249 0.000248 175.997924150569 4716 14 612 1031694 572441236
+37	10332874 5157 10 186249 0.000248 175.997924150569 177 90 90 15930 1433700
+38	10338031 127302 10 186249 0.000248 175.997924150569 4669 14 612 1017938 565163172
+39	10465333 93238 10 186249 0.000248 175.997924150569 2421 5.8e-05 0.030954044288 2.467124626432 0.011058429128869
+40	10558571 127284 13 186252 0.000249334256 175.997925484825 4666 14 612 1017958 565168164
+41	10685855 127284 13 186252 0.000249334256 175.997925484825 4666 14 612 1017958 565168164
+42	10813139 5168 13 186252 0.000249334256 175.997925484825 177 90 90 15930 1433700
+43	10818307 126899 13 186252 0.000249334256 175.997925484825 4652 14 612 1013142 562505924
+44	10945206 66957 13 186252 0.000249334256 175.997925484825 2421 36 584 918678 511378532
+45	11012163 153794 18 186411 0.000257334256 176.379541996531 5422 36 584 721584 273043096
+46	11165957 159216 18 186411 0.000257334256 176.379541996531 5422 512 4896 6987200 20332969472
+47	11325173 152658 18 186411 0.000257334256 176.379541996531 5469 0 669 91669 4480687
+48	11477831 187888 20 186385 0.000479334256 176.255033761156 5421 0 0.04862339792 24.822427879783 0.4292967051024
+49	11665719 159208 20 186385 0.000479334256 176.255033761156 5421 512 4896 6986560 20332559872
+50	11824927 260878 20 186385 0.000479334256 176.255033761156 7713 24000000 24000000 185112000000 4.442688e+18
+51	12085805 216778 20 186385 0.000479334256 176.255033761156 7713 14 612 919578 326151868
+52	12302583 827575 21 186390 0.000479334256 176.255099761156 30852 0 2 30852 46278
+53	13130158 216791 24 186389 0.000537334256 176.255099761156 7713 14 612 919578 326151868
+54	13346949 94175 24 186389 0.000537334256 176.255099761156 3177 64 112 302772 29590728
+55	13441124 215528 24 186389 0.000537334256 176.255099761156 7666 14 612 904750 318136268
+56	13656652 196107 24 186389 0.000537334256 176.255099761156 5421 5e-05 0.032342022144 2.6369115938879 0.009858048737113
+57	13852759 215567 29 186392 0.000538668512 176.255101095412 7667 14 612 905984 318888520
+58	14068326 215567 29 186392 0.000538668512 176.255101095412 7667 14 612 905984 318888520
+59	14283893 94166 29 186392 0.000538668512 176.255101095412 3175 64 112 302644 29582536
+60	14378059 215183 29 186392 0.000538668512 176.255101095412 7653 14 612 902240 316963816
+61	14593242 153774 29 186392 0.000538668512 176.255101095412 5419 36 584 721460 273037800
+62	14747016 6874 42 186281 0.001026668512 175.998262819081 177 -0.000253743856 4.874567e-06 -0.000146522895 8.5396518804056e-08
+63	14753890 476738 46 186408 0.0125 176.375 14062 -100 28.087147094309 -358622.52325039 30851161.727335
+64	15230628 55659 58 186411 0.1 176.287463270272 1766 0 4593344.88628 78129179.061887 1.6562176086466e+14
+65	15286287 55608 60 186372 0.1 176.164904182368 1765 0 3700241.8402244 77285161.720022 1.5575472175708e+14
+66	15341895 116797 82 186394 0.125311340708 176.255101095412 2820 -0.013062203327 0.009212157031 -1.28857776487 0.0062389116629838
+67	15458692 60075 82 186394 0.125311340708 176.255101095412 1410 0.89901367320145 1.1654772639936 1410.0475683134 1410.1951667294
+68	15518767 59288 82 186394 0.125311340708 176.255101095412 1410 0.125311337839 176.25057258423 124345.37857531 14615766.264726
+69	15578055 96793 93 157994 0.2 100.001782092428 3737 0 0 0 0
+70	15674848 69929 93 157994 0.2 100.001782092428 2245 7504 1357771 1992353369 1.8813770431703e+15
+71	15744777 64744 93 157994 0.2 100.001782092428 2244 7504 7504 16838976 126359675904
+72	15809521 69883 93 157994 0.2 100.001782092428 2244 0 1350267 1974956623 1.8512994271236e+15
+73	15879404 41 94 862 0.2 2.2 3 28 28 84 2352
+74	15879445 54 103 871 0.20005 2.20005 3 64 64 192 12288
+75	15879499 48746 358 186243 0.1 175.89952864328 1762 0 6534834.216755 92187160.345325 4.0057510532747e+14
+76	15928245 50453 360 186245 0.1 175.904029322864 1762 0 6299606.7845619 91879232.313538 3.9601604019192e+14
+77	15978698 25 874 874 2.200051334256 2.200051334256 1 64 64 64 4096
+78	15978723 25 876 876 2.200051334256 2.200051334256 1 28 28 28 784
+79	15978748 123431 884 158026 2.200651334256 100.002055426684 4539 14 612 1015764 571007536
+80	16102179 191484 884 158003 2.200651334256 100.001824758172 6873 0 4.4e-05 0.100804 4.4353760000001e-06
+81	16293663 122116 887 158029 2.200652668512 100.00205676094 4489 14 612 1002028 563734464
+82	16415779 122616 897 158013 2.200696668512 100.002010092428 4536 14 612 616806 296561140
+83	16538395 121401 900 158016 2.200698002768 100.002011426684 4492 14 612 603340 289305984
+84	16659796 191453 906 158025 2.201060668512 100.002054092428 6873 0 4.4e-05 0.100804 4.4353760000001e-06
+85	16851249 28 912 912 2.201062002768 2.201062002768 1 49999 49999 49999 2499900001
+86	16851277 24 912 912 2.201062002768 2.201062002768 1 0 0 0 0
+87	16851301 24 912 912 2.201062002768 2.201062002768 1 0 0 0 0
+93	16851325 69898 936 157994 2.201431337024 100.001782092428 2243 550265 1350266 1979627037 1.8579605974349e+15
+94	16921223 69064 936 157994 2.201431337024 100.001782092428 2243 50000 450001 713397570 2.6644579269536e+14
+95	16990287 61014 936 157994 2.201431337024 100.001782092428 2243 0 536 800000 428728576
+96	17051301 21465 936 157973 2.201431337024 100.001511423916 749 7504 7504 5620496 42176201984
+97	17072766 29 940 940 2.201431337024 2.201431337024 1 400000 400000 400000 160000000000
+98	17072795 22791 942 81575 2.201431337024 3.53365099632 747 50000 449856 186696216 56640125153856
+99	17095586 42467 942 157973 2.201431337024 100.001511423916 1483 0 7504 10552377 76110189761
+105	17138053 21384 991 82314 2.202711339792 3.545287026768 747 144 536 400000 214343552
+106	17159437 29417 991 82314 2.202711339792 3.545287026768 747 0.001280002768 1.343855689744 495.94619524373 445.80656211825
+107	17188854 22130 991 82314 2.202711339792 3.545287026768 747 288 1072 800000 857374208
+109	17210984 2291 1019 82469 2.203340674048 3.547327035072 58 0.001669337024 0.052136071968 1.343817024 0.036604326047652
+110	17213275 2297 1019 82469 2.203340674048 3.547327035072 58 0.000238667128 0.028201372276 1.194052031206 0.02815691878098
+111	17215572 2298 1019 82469 2.203340674048 3.547327035072 58 0.003672785575 0.656488667128 5.626351722548 1.8864945454726
+112	17217870 1652 1019 82469 2.203340674048 3.547327035072 58 1 2.62619333564 63.906989798473 76.253587070013
+113	17219522 23480 1019 157973 2.203340674048 100.001511423916 748 1072 401464 150548464 40320233624704
+114	17243002 26674 1019 157973 2.203340674048 100.001511423916 748 4294967295 4294967295 3212635536660 1.3798164560709e+22
+115	17269676 60246 1019 157994 2.203340674048 100.001782092428 2242 0 0 0 0
+116	17329922 43260 1047 122178 2.20409134256 4.166766187904 1493 288 536 800000 428728576
+117	17373182 59339 1047 122178 2.20409134256 4.166766187904 1494 0.002660005536 1.96533485088 1749.7334531224 2543.3768235142
+124	17432521 1333 9192 116367 2.32593971624 4.078913913872 47 76 612 13756 7278064
+125	17433854 399 9195 116370 2.325941050496 4.078915248128 14 76 612 4816 2662240
+126	17434253 27 9195 9195 2.325941050496 2.325941050496 1 76 76 76 5776
+127	17434280 27 9195 9195 2.325941050496 2.325941050496 1 76 76 76 5776
+128	17434307 27 9195 9195 2.325941050496 2.325941050496 1 76 76 76 5776
+129	17434334 27 9195 9195 2.325941050496 2.325941050496 1 76 76 76 5776
+130	17434361 1310 9212 116509 2.326209050496 4.082425922176 47 76 612 14828 8015600
+131	17435671 398 9215 116512 2.326210384752 4.082427256432 14 76 612 3744 1924704
+132	17436069 115 18054 116512 2.480849457392 4.082427256432 4 76 612 1376 760640
+133	17436184 115 18054 116512 2.480849457392 4.082427256432 4 76 612 1376 760640
+134	17436299 115 18054 116512 2.480849457392 4.082427256432 4 76 612 1376 760640
+135	17436414 115 18054 116512 2.480849457392 4.082427256432 4 76 612 1376 760640
+21	17436529 946528 186412 268764 176.379541996531 397.774124202675 32768 0 2 15942 31884
+23	18383057 946872 186416 338774 176.379543330787 586.025023644188 32768 0 2 1640 3280
+63	19329929 1144206 186436 339672 176.3875 588.3625 32768 -100 -23.26487095328 -2557893.6202517 209644794.7698
+24	20474135 1113773 186436 339672 176.3875 588.3625 32768 176.38295721979 588.32574560927 12551897.73801 5271094151.2869
+21	21587908 946606 268768 351132 397.774190202675 619.164226216924 32768 0 2 15940 31880
+52	22534514 946552 186414 355695 176.379541996531 631.415780607066 32768 0 2 32768 49152
+0	23481066 615444 186413 414430 176.379541996531 789.301548256171 22068 0 1 11034 11034
+1	24096510 615418 186413 414426 176.379541996531 789.301482256171 22067 0 1 11033 11033
+2	24711928 637484 186413 414426 176.379541996531 789.301482256171 22067 0 896 8414624 6580836864
+3	25349412 615444 186413 414430 176.379541996531 789.301548256171 22068 0 1 11034 11034
+4	25964856 615418 186412 414425 176.379541996531 789.301482256171 22067 0 1 11033 11033
+8	26580274 34236 186617 414290 176.990978609753 789.038102822085 1226 0 1 613 613
+9	26614510 34236 186615 414286 176.990978609753 789.038044822085 1226 0 1 613 613
+10	26648746 36688 186615 414286 176.990978609753 789.038044822085 1226 0 720 441360 317779200
+11	26685434 35462 186617 414290 176.990978609753 789.038102822085 1226 0 1 613 613
+12	26720896 35462 186615 414285 176.990978609753 789.038044822085 1226 0 1 613 613
+16	26756358 637512 186414 414431 176.379541996531 789.301548256171 22068 2 3 55170 143442
+17	27393870 142460 186445 414404 176.454549408617 789.250858230587 4903 0 11 26974 206864
+18	27536330 35462 186618 414291 176.990978609753 789.038102822085 1226 2 3 3065 7969
+19	27571792 142490 186443 414402 176.445844556371 789.238291142196 4903 0 11 26974 206864
+20	27714282 672938 186414 414431 176.379541996531 789.301548256171 23294 0 3 13486 17164
+21	28387220 727712 351136 414431 619.164280216924 789.301548256171 25186 0 2 12252 24504
+22	29114932 672966 186416 414432 176.379543330787 789.301549590427 23294 0 3 44749 110953
+23	29787898 469984 338786 414432 586.0255163127 789.301549590427 16272 0 2 812 1624
+24	30257882 542885 339673 414439 588.375 789.325 15973 588.33824481579 789.27414170272 11003164.28445 7633667081.938
+26	30800767 419617 186435 414435 176.380053330787 789.301549590427 9808 176.37535281466 789.25069213948 4735429.7406113 2593455475.5626
+28	31220384 18344 186615 414284 176.990978609753 789.038044822085 613 62 62 38006 2356372
+29	31238728 18957 186615 414284 176.990978609753 789.038044822085 613 720 720 441360 317779200
+30	31257685 18144 186615 414284 176.990978609753 789.038044822085 613 0 31 9172 187534
+31	31275829 17731 186617 414286 176.990978609753 789.038044822085 613 0 0 0 0
+32	31293560 18957 186617 414286 176.990978609753 789.038044822085 613 720 720 441360 317779200
+33	31312517 22022 186617 414286 176.990978609753 789.038044822085 613 24000000 24000000 14712000000 3.53088e+17
+34	31334539 18344 186617 414286 176.990978609753 789.038044822085 613 90 90 55170 4965300
+35	31352883 70924 186618 414291 176.990978609753 789.038102822085 2452 0 2 2452 3678
+36	31423807 18344 186621 414290 176.991036609753 789.038102822085 613 90 90 55170 4965300
+37	31442151 18344 186621 414290 176.991036609753 789.038102822085 613 90 90 55170 4965300
+38	31460495 18344 186621 414290 176.991036609753 789.038102822085 613 90 90 55170 4965300
+39	31478839 21409 186621 414290 176.991036609753 789.038102822085 613 5.8e-05 5.8e-05 0.035554 2.062132e-06
+40	31500248 18326 186624 414293 176.991037944009 789.038104156341 613 90 90 55170 4965300
+41	31518574 18326 186624 414293 176.991037944009 789.038104156341 613 90 90 55170 4965300
+42	31536900 18326 186624 414293 176.991037944009 789.038104156341 613 90 90 55170 4965300
+43	31555226 18326 186624 414293 176.991037944009 789.038104156341 613 90 90 55170 4965300
+44	31573552 18326 186624 414293 176.991037944009 789.038104156341 613 62 62 38006 2356372
+45	31591878 329762 186420 414420 176.379595996531 789.300912256171 11033 52 84 742904 52573080
+46	31921640 340795 186420 414420 176.379595996531 789.300912256171 11033 640 896 8414624 6580836864
+47	32262435 326298 186420 414420 176.379595996531 789.300912256171 11033 0 31 170813 3581055
+48	32588733 358702 186413 414426 176.379541996531 789.301482256171 11034 0 0.00067 2.209315629683 0.0010038431711623
+49	32947435 340824 186413 414426 176.379541996531 789.301482256171 11034 640 896 8415264 6581246464
+50	33288259 395994 186413 414426 176.379541996531 789.301482256171 11034 24000000 24000000 264816000000 6.355584e+18
+51	33684253 334694 186413 414426 176.379541996531 789.301482256171 11034 80 112 1051908 102831976
+52	34018947 328472 355719 414431 631.540321028594 789.301548256171 11368 0 2 11368 17052
+53	34347419 334694 186417 414430 176.379595996531 789.301548256171 11034 80 112 1051908 102831976
+54	34682113 334694 186417 414430 176.379595996531 789.301548256171 11034 80 112 1051908 102831976
+55	35016807 334694 186417 414430 176.379595996531 789.301548256171 11034 80 112 1051908 102831976
+56	35351501 384960 186417 414430 176.379595996531 789.301548256171 11034 5.4e-05 6.6e-05 0.65958800000004 3.9786151999998e-05
+57	35736461 334690 186422 414433 176.379597330787 789.301549590427 11034 80 112 1051908 102831976
+58	36071151 334690 186422 414433 176.379597330787 789.301549590427 11034 80 112 1051908 102831976
+59	36405841 334690 186422 414433 176.379597330787 789.301549590427 11034 80 112 1051908 102831976
+60	36740531 334690 186422 414433 176.379597330787 789.301549590427 11034 80 112 1051908 102831976
+61	37075221 329786 186422 414433 176.379597330787 789.301549590427 11034 52 84 742956 52575784
+62	37405007 24221 186653 414322 176.991915278265 789.039221490597 613 -2.730444e-06 5.806262e-06 0.00081214897 2.1210412773984e-09
+63	37429228 557185 339673 414439 588.375 789.325 15973 -100 19.14455298055 -1117852.2050361 94030733.221529
+64	37986413 197388 186452 414411 176.387463270272 789.287463270272 6130 0 29760 84137280 1554702028800
+65	38183801 197451 186413 414413 176.264904182368 789.264904182368 6131 0 29760 84152640 1553217638400
+66	38381252 419618 186435 414435 176.380053330787 789.301549590427 9808 -0.051483295733 -0.004119051852 -288.73899411673 10.301219830535
+67	38800870 212187 186435 414435 176.380053330787 789.301549590427 4904 0.99013078528318 1.0096485698593 4904.0341734225 4904.1332969541
+68	39013057 209803 186435 414435 176.380053330787 789.301549590427 4904 176.3755115946 789.25069213948 2367714.8684418 1296727736.0173
+75	39222860 173507 186615 414284 175.99952864328 788.99952864328 6131 0 7200 4413600 31777920000
+76	39396367 179638 186617 414286 176.004029322864 789.004029322864 6131 0 7200 4413600 31777920000
+21	39576005 948160 414452 496801 789.425858516898 1010.811612168191 32768 0 2 15944 31888
+23	40524165 962800 414457 566812 789.425859851154 1199.058392725352 32768 0 2 1640 3280
+63	41486965 1159680 414440 567052 789.3375 1199.6875 32768 -100 30.549540626816 -1979908.4245614 154221401.84881
+24	42646645 1129758 414440 567052 789.3375 1199.6875 32768 789.28664167052 1199.611817643 32578497.525714 32849497632.362
+21	43776403 979708 496803 579169 1010.811612168191 1232.203280294575 32768 0 2 15940 31880
+52	44756111 964368 414455 583734 789.425858516898 1244.454450408107 32768 0 2 32768 49152
+0	45720479 629584 414454 642301 789.425858516898 1401.956330357987 22052 0 1 11026 11026
+1	46350063 629586 414452 642297 789.425858516898 1401.956264357987 22052 0 1 11026 11026
+2	46979649 651638 414452 642297 789.425858516898 1401.956264357987 22052 0 896 8409216 6576572416
+3	47631287 629584 414454 642301 789.425858516898 1401.956330357987 22052 0 1 11026 11026
+4	48260871 629586 414452 642296 789.425858516898 1401.956264357987 22052 0 1 11026 11026
+8	48890457 34967 414657 642324 790.036734569258 1402.064366224202 1225 0 1 613 613
+9	48925424 34996 414655 642324 790.036734569258 1402.064366224202 1226 0 1 613 613
+10	48960420 37448 414655 642324 790.036734569258 1402.064366224202 1226 0 720 441360 317779200
+11	48997868 36192 414657 642324 790.036734569258 1402.064366224202 1225 0 1 613 613
+12	49034060 36222 414655 642323 790.036734569258 1402.064366224202 1226 0 1 613 613
+16	49070282 651636 414455 642302 789.425858516898 1401.956330357987 22052 2 3 55130 143338
+17	49721918 145638 414445 642316 789.375858414567 1402.030760796901 4902 0 11 26955 206587
+18	49867556 36192 414658 642325 790.036734569258 1402.064366224202 1225 2 3 3063 7965
+19	49903748 145680 414443 642314 789.363202710075 1402.0134298555 4902 0 11 26955 206587
+20	50049428 687796 414455 642302 789.425858516898 1401.956330357987 23276 0 3 13474 17146
+21	50737224 751000 579171 642302 1232.203280294575 1401.956330357987 25120 0 2 12220 24440
+22	51488224 687756 414457 642325 789.425859851154 1402.064366224202 23277 0 3 44716 110872
+23	52175980 485126 566824 642325 1199.058625393864 1402.064366224202 16237 0 2 812 1624
+24	52661106 566441 567053 642319 1199.7 1402.0625 16190 1199.6243165794 1401.9817390549 21059975.955359 27450101780.025
+26	53227547 425740 414476 642306 789.426149851154 1401.956331692243 9802 789.37529241615 1401.8759515591 10739321.050273 12072839100.586
+28	53653287 18724 414655 642322 790.036734569258 1402.064366224202 613 62 62 38006 2356372
+29	53672011 19337 414655 642322 790.036734569258 1402.064366224202 613 720 720 441360 317779200
+30	53691348 18539 414655 642322 790.036734569258 1402.064366224202 613 0 31 9704 205454
+31	53709887 18111 414657 642324 790.036734569258 1402.064366224202 613 0 0 0 0
+32	53727998 19337 414657 642324 790.036734569258 1402.064366224202 613 720 720 441360 317779200
+33	53747335 22402 414657 642324 790.036734569258 1402.064366224202 613 24000000 24000000 14712000000 3.53088e+17
+34	53769737 18724 414657 642324 790.036734569258 1402.064366224202 613 90 90 55170 4965300
+35	53788461 72324 414658 641957 790.036734569258 1401.064400576444 2448 0 2 2448 3672
+36	53860785 18693 414661 641956 790.036792569258 1401.064400576444 612 90 90 55080 4957200
+37	53879478 18693 414661 641956 790.036792569258 1401.064400576444 612 90 90 55080 4957200
+38	53898171 18693 414661 641956 790.036792569258 1401.064400576444 612 90 90 55080 4957200
+39	53916864 21753 414661 641956 790.036792569258 1401.064400576444 612 5.8e-05 5.8e-05 0.035496 2.058768e-06
+40	53938617 18692 414664 641959 790.036793903514 1401.0644019107 612 90 90 55080 4957200
+41	53957309 18692 414664 641959 790.036793903514 1401.0644019107 612 90 90 55080 4957200
+42	53976001 18692 414664 641959 790.036793903514 1401.0644019107 612 90 90 55080 4957200
+43	53994693 18692 414664 641959 790.036793903514 1401.0644019107 612 90 90 55080 4957200
+44	54013385 18692 414664 641959 790.036793903514 1401.0644019107 612 62 62 37944 2352528
+45	54032077 336846 414452 642291 789.425858516898 1401.955814357987 11026 52 84 742424 52538816
+46	54368923 347872 414452 642291 789.425858516898 1401.955814357987 11026 640 896 8409216 6576572416
+47	54716795 333480 414452 642291 789.425858516898 1401.955814357987 11026 0 31 172442 3636604
+48	55050275 365737 414454 642297 789.425858516898 1401.956264357987 11026 0 0.00067 2.238593761321 0.0010273668614451
+49	55416012 347870 414454 642297 789.425858516898 1401.956264357987 11026 640 896 8409216 6576572416
+50	55763882 403000 414454 642297 789.425858516898 1401.956264357987 11026 24000000 24000000 264624000000 6.350976e+18
+51	56166882 341745 414454 642297 789.425858516898 1401.956264357987 11026 80 112 1051152 102758944
+52	56508627 338904 583758 642302 1244.578907014276 1401.956330357987 11336 0 2 11336 17004
+53	56847531 341745 414458 642301 789.425912516898 1401.956330357987 11026 80 112 1051152 102758944
+54	57189276 341745 414458 642301 789.425912516898 1401.956330357987 11026 80 112 1051152 102758944
+55	57531021 341745 414458 642301 789.425912516898 1401.956330357987 11026 80 112 1051152 102758944
+56	57872766 391974 414458 642301 789.425912516898 1401.956330357987 11026 5.4e-05 6.6e-05 0.65911200000004 3.9757607999998e-05
+57	58264740 341709 414463 642304 789.425913851154 1401.956331692243 11026 80 112 1051152 102758944
+58	58606449 341709 414463 642304 789.425913851154 1401.956331692243 11026 80 112 1051152 102758944
+59	58948158 341709 414463 642304 789.425913851154 1401.956331692243 11026 80 112 1051152 102758944
+60	59289867 341709 414463 642304 789.425913851154 1401.956331692243 11026 80 112 1051152 102758944
+61	59631576 336808 414463 642304 789.425913851154 1401.956331692243 11026 52 84 742424 52538816
+62	59968384 24611 414694 641988 790.03765123777 1401.065239244956 612 -2.288714e-06 5.840371e-06 0.000797656415 1.9910658437589e-09
+63	59992995 578213 567053 642319 1199.7 1402.0625 16190 -100 23.226813404821 -406207.06568388 27536296.565795
+64	60571208 201287 414452 642282 789.387463270272 1401.887463270272 6126 0 29760 84092160 1553351065600
+65	60772495 202311 414454 642284 789.364904182368 1401.864904182368 6126 0 29760 84092160 1440023961600
+66	60974806 425666 414476 642306 789.426149851154 1401.956331692243 9802 -0.081369831636 -0.049969294872 -656.53620883304 45.168006861975
+67	61400472 215268 414476 642306 789.426149851154 1401.956331692243 4901 0.99044770020874 1.0091667208299 4901.0310426124 4901.1280101305
+68	61615740 212871 414476 642306 789.426149851154 1401.956331692243 4901 789.37529241615 1401.8755725338 5369660.5228962 6036419545.4365
+75	61828611 177499 414655 642322 789.09952864328 1401.99952864328 6130 0 7200 4413600 31777920000
+76	62006110 183630 414657 642324 789.104029322864 1402.004029322864 6130 0 7200 4413600 31777920000
+21	62189740 979430 642327 724668 1402.064367558458 1623.336186678212 32768 0 2 15940 31880
+0	63169170 413884 642338 790357 1402.064855558458 1799.952609864564 14328 0 1 7164 7164
+1	63583054 413891 642336 790353 1402.064433558497 1799.952543864564 14328 0 1 7164 7164
+2	63996945 428219 642336 790353 1402.064433558497 1799.952543864564 14328 0 896 5463744 4272978944
+3	64425164 413884 642338 790357 1402.064855558458 1799.952609864564 14328 0 1 7164 7164
+4	64839048 413891 642336 790352 1402.064433558497 1799.952543864564 14328 0 1 7164 7164
+8	65252939 22985 642328 790011 1402.064424224202 1799.055999528323 795 0 1 397 397
+9	65275924 22956 642694 790007 1403.065379568822 1799.055941528323 794 0 1 397 397
+10	65298880 24544 642694 790007 1403.065379568822 1799.055941528323 794 0 720 285840 205804800
+11	65323424 23780 642328 790011 1402.064424224202 1799.055999528323 795 0 1 397 397
+12	65347204 23750 642694 790006 1403.065379568822 1799.055941528323 794 0 1 397 397
+16	65370954 428212 642339 790358 1402.064855558458 1799.952609864564 14328 2 3 35820 93132
+17	65799166 95651 642401 790331 1402.155761529434 1799.902423129631 3183 0 11 17517 134335
+18	65894817 23780 642329 790012 1402.064424224202 1799.055999528323 795 2 3 1987 5165
+19	65918597 95655 642399 790328 1402.138896086805 1799.882652244934 3183 0 11 17517 134335
+20	66014252 451994 642327 790358 1402.064367558458 1799.952609864564 15124 0 3 8756 11144
+21	66466246 780996 724670 790358 1623.336186678212 1799.952609864564 26136 0 2 12716 25432
+22	67247242 451964 642329 790359 1402.064424224202 1799.95261119882 15123 0 3 29054 72038
+23	67699206 951458 642325 790359 1402.064366224202 1799.95261119882 31835 0 2 1588 3176
+24	68650664 1112921 642363 790369 1402.075 1800 31812 1401.994238994 1799.9225832582 50930322.284415 81958467654.243
+26	69763585 278791 642391 790369 1402.081312373278 1800 6369 1402.0003530962 1799.9227664737 10196573.016861 16408498936.575
+28	70042376 12272 642694 790005 1403.065379568822 1799.055941528323 397 62 62 24614 1526068
+29	70054648 12669 642694 790005 1403.065379568822 1799.055941528323 397 720 720 285840 205804800
+30	70067317 12128 642694 790005 1403.065379568822 1799.055941528323 397 0 31 5640 114658
+31	70079445 11875 642696 790007 1403.065379568822 1799.055941528323 397 0 0 0 0
+32	70091320 12669 642696 790007 1403.065379568822 1799.055941528323 397 720 720 285840 205804800
+33	70103989 14654 642696 790007 1403.065379568822 1799.055941528323 397 24000000 24000000 9528000000 2.28672e+17
+34	70118643 12272 642696 790007 1403.065379568822 1799.055941528323 397 90 90 35730 3215700
+35	70130915 47620 642325 790012 1402.064366224202 1799.055999528323 1592 0 2 1592 2388
+36	70178535 12303 642328 790011 1402.064424224202 1799.055999528323 398 90 90 35820 3223800
+37	70190838 12303 642328 790011 1402.064424224202 1799.055999528323 398 90 90 35820 3223800
+38	70203141 12303 642328 790011 1402.064424224202 1799.055999528323 398 90 90 35820 3223800
+39	70215444 14293 642328 790011 1402.064424224202 1799.055999528323 398 5.8e-05 5.8e-05 0.023084 1.338872e-06
+40	70229737 12289 642331 790014 1402.064425558458 1799.056000862579 398 90 90 35820 3223800
+41	70242026 12289 642331 790014 1402.064425558458 1799.056000862579 398 90 90 35820 3223800
+42	70254315 12289 642331 790014 1402.064425558458 1799.056000862579 398 90 90 35820 3223800
+43	70266604 12289 642331 790014 1402.064425558458 1799.056000862579 398 90 90 35820 3223800
+44	70278893 12289 642331 790014 1402.064425558458 1799.056000862579 398 62 62 24676 1529912
+45	70291182 221277 642336 790347 1402.064433558497 1799.952473864564 7164 52 84 482376 34135664
+46	70512459 228441 642336 790347 1402.064433558497 1799.952473864564 7164 640 896 5463744 4272978944
+47	70740900 219047 642336 790347 1402.064433558497 1799.952473864564 7164 0 31 111572 2347706
+48	70959947 240056 642338 790353 1402.064855558458 1799.952543864564 7164 0 0.00067 1.443136026492 0.00065873996768979
+49	71200003 228434 642338 790353 1402.064855558458 1799.952543864564 7164 640 896 5463744 4272978944
+50	71428437 264254 642338 790353 1402.064855558458 1799.952543864564 7164 24000000 24000000 171936000000 4.126464e+18
+51	71692691 224454 642338 790353 1402.064855558458 1799.952543864564 7164 80 112 682968 66765296
+52	71917145 856424 642339 790358 1402.064855558458 1799.952609864564 28656 0 2 28656 42984
+53	72773569 224454 642342 790357 1402.064913558458 1799.952609864564 7164 80 112 682968 66765296
+54	72998023 224454 642342 790357 1402.064913558458 1799.952609864564 7164 80 112 682968 66765296
+55	73222477 224454 642342 790357 1402.064913558458 1799.952609864564 7164 80 112 682968 66765296
+56	73446931 257090 642342 790357 1402.064913558458 1799.952609864564 7164 5.4e-05 6.6e-05 0.42824800000002 2.5831791999999e-05
+57	73704021 224440 642347 790360 1402.064914892714 1799.95261119882 7164 80 112 682968 66765296
+58	73928461 224440 642347 790360 1402.064914892714 1799.95261119882 7164 80 112 682968 66765296
+59	74152901 224440 642347 790360 1402.064914892714 1799.95261119882 7164 80 112 682968 66765296
+60	74377341 224440 642347 790360 1402.064914892714 1799.95261119882 7164 80 112 682968 66765296
+61	74601781 221256 642347 790360 1402.064914892714 1799.95261119882 7164 52 84 482376 34135664
+62	74823037 16141 642360 790043 1402.065282892714 1799.056898196835 398 -3.014943e-06 5.392886e-06 0.000572031414 1.5401301534361e-09
+63	74839178 1127185 642363 790368 1402.075 1800 31811 -100 99.638100549113 270007.81626497 78979743.453653
+64	75966363 132187 642336 790369 1401.987463270272 1800 3982 0 29760 54652800 1010027520000
+65	76098550 133076 642338 790369 1401.964904182368 1800 3982 0 29760 54652800 911870208000
+66	76231626 278764 642391 790362 1402.081312373278 1799.95261119882 6368 -0.086778812013 -0.077066227189 -524.72293553097 43.273569576956
+67	76510390 140949 642391 790362 1402.081312373278 1799.95261119882 3184 0.99044324506984 1.0093227662836 3184.0268050117 3184.0961892639
+68	76651339 139366 642391 790362 1402.081312373278 1799.95261119882 3184 1402.0005490133 1799.8751918566 5097386.545871 8202629603.5497
+75	76790705 116631 642694 790369 1402.09952864328 1800 3981 0 7200 2865600 20632320000
+76	76907336 120581 642696 790369 1402.104029322864 1800 3980 0 7200 2865600 20632320000
+
